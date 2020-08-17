@@ -1,15 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Northwind.Entities\Northwind.Entities.csproj" />
+    <ProjectReference Include="..\NorthwindApi.DataAccess\NorthwindApi.DataAccess.csproj" />
   </ItemGroup>
+
 
 </Project>

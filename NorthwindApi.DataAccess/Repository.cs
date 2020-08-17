@@ -10,7 +10,13 @@ namespace NorthwindApi.DataAccess
     {
         const string ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Northwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        public List<Invoice> GetAllInvoices(string customerID)
+
+        /// <summary>
+        /// Get all Invoices by entered Customer ID
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public List<Invoice> GetAllInvoicesById(string customerID)
         {
             string sql = $"SELECT CustomerName, ExtendedPrice, Freight FROM Invoices WHERE CustomerID LIKE '{customerID}'";
             DataRowCollection dataRows = Execute(sql);
@@ -18,6 +24,22 @@ namespace NorthwindApi.DataAccess
             return invoices;
         }
 
+        /// <summary>
+        /// Get all of the invoices
+        /// </summary>
+        /// <returns></returns>
+        public List<Invoice> GetAllInvoices()
+        {
+            string sql = $"SELECT CustomerName, ExtendedPrice, Freight FROM Invoices";
+            DataRowCollection dataRows = Execute(sql);
+            List<Invoice> invoices = ProcessInvoices(dataRows);
+            return invoices;
+        }
+
+        /// <summary>
+        /// Get all customers
+        /// </summary>
+        /// <returns></returns>
         public List<Customer> GetAllCustomers()
         {
             string sql = "SELECT DISTINCT CustomerID FROM Customers";
@@ -43,6 +65,11 @@ namespace NorthwindApi.DataAccess
             }
         }
 
+        /// <summary>
+        /// Process the customers and return them as list
+        /// </summary>
+        /// <param name="dataRows"></param>
+        /// <returns></returns>
         private List<Customer> ProcessCustomers(DataRowCollection dataRows)
         {
             List<Customer> customers = new List<Customer>();
@@ -55,6 +82,11 @@ namespace NorthwindApi.DataAccess
             return customers;
         }
 
+        /// <summary>
+        /// Process the invoices and return them as a list
+        /// </summary>
+        /// <param name="dataRows"></param>
+        /// <returns></returns>
         private List<Invoice> ProcessInvoices(DataRowCollection dataRows)
         {
             List<Invoice> invoices = new List<Invoice>();
