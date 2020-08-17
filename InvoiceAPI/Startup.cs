@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using InvoiceAPI.Models;
+using TodoApi.Models;
 
 namespace InvoiceAPI
 {
@@ -27,8 +28,8 @@ namespace InvoiceAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<InvoiceContext>(opt =>
-               opt.UseInMemoryDatabase("Invoice"));
+            services.AddDbContext<TodoContext>(opt =>
+               opt.UseInMemoryDatabase("ToDoList"));
             services.AddControllers();
         }
 
