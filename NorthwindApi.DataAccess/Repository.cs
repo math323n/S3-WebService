@@ -61,7 +61,12 @@ namespace NorthwindApi.DataAccess
             List<Customer> customers = ProcessCustomers(dataRows);
             return customers;
         }
-
+        #region Order
+        /// <summary>
+        /// Get all Orders by a Customer ID
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
         public List<Order> GetAllOrdersByID(string customerID)
         {
             string sql = $"SELECT CustomerID, OrderDate, RequiredDate, ShippedDate, ShipAddress, ShipCountry" +
@@ -71,6 +76,10 @@ namespace NorthwindApi.DataAccess
             return orders;
         }
 
+        /// <summary>
+        ///  Get all Orders
+        /// </summary>
+        /// <returns></returns>
         public List<Order> GetAllOrders()
         {
             string sql = $"SELECT CustomerID, OrderDate, RequiredDate, ShippedDate, ShipAddress, ShipCountry" +
@@ -79,6 +88,33 @@ namespace NorthwindApi.DataAccess
             List<Order> orders = ProcessOrders(datarows);
             return orders;
         }
+
+        /// <summary>
+        /// Get all pending Orders
+        /// </summary>
+        /// <returns></returns>
+        public List<Order> GetPendingOrders()
+        {
+            string query = $"SELECT CustomerID, OrderDate, RequiredDate, ShippedDate, ShipAddress, ShipCountry FROM Orders WHERE ShippedDate IS NULL";
+            DataRowCollection datarows = Execute(query);
+            List<Order> orders = ProcessOrders(datarows);
+            return orders;
+        }
+
+        /// <summary>
+        /// Get all completed orders
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public List<Order> GetCompletedOrders(string customerId)
+        {
+            string query = $"SELECT CustomerID, OrderDate, RequiredDate, ShippedDate, ShipAddress, ShipCountry FROM Orders WHERE ShippedDate IS NOT NULL";
+            DataRowCollection datarows = Execute(query);
+            List<Order> orders = ProcessOrders(datarows);
+            return orders;
+        }
+
+        #endregion
 
         /// <summary>
         /// Execute SQL

@@ -83,13 +83,26 @@ namespace Northwind.Api.Controllers
         }
 
         /// <summary>
-        /// Get all Products
+        /// Get all Orders
         /// </summary>
         /// <returns products></returns>
-        [HttpGet]
+        [HttpGet("all")]
         public List<Order> GetAll()
         {
             return new Repository().GetAllOrders();
         }
+
+        [HttpGet("pending")]
+        public List<Order> GetAllPending()
+        {
+            return new Repository().GetPendingOrders();
+        }
+
+        [HttpGet("completed")]
+        public List<Order> GetAllCompleted(string customerID)
+        {
+            return new Repository().GetCompletedOrders(customerID);
+        }
+
     }
 }
