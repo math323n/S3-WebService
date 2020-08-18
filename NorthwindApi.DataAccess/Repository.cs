@@ -47,7 +47,12 @@ namespace NorthwindApi.DataAccess
             List<Customer> customers = ProcessCustomers(dataRows);
             return customers;
         }
-
+        
+        /// <summary>
+        /// Execute SQL
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         private DataRowCollection Execute(string sql)
         {
             try
