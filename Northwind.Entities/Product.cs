@@ -6,6 +6,7 @@ namespace Northwind.Entities
 {
     public class Product
     {
+
         public Product(int productID, string productName, string quantityPerUnit, decimal unitPrice)
         {
             ProductID = productID;

@@ -13,7 +13,11 @@ namespace Northwind.Api.Controllers
     [ApiController]
     public class InvoicesController: ControllerBase
     {
-
+        /// <summary>
+        /// Get all customers with specified ID
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns invoices></returns>
         [HttpGet("{customerId}")]
         public List<Invoice> GetAllId(string customerId)
         {
@@ -21,6 +25,10 @@ namespace Northwind.Api.Controllers
             return invoices;
         }
 
+        /// <summary>
+        /// Get all Customers
+        /// </summary>
+        /// <returns invoices></returns>
         [HttpGet]
         public List<Invoice> GetAll()
         {
@@ -28,5 +36,4 @@ namespace Northwind.Api.Controllers
             return invoices;
         }
     }
-
 }

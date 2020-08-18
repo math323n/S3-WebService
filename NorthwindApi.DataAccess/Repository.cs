@@ -9,9 +9,10 @@ namespace NorthwindApi.DataAccess
 {
     public class Repository
     {
+        // Connection string to connect to local database (Northwind)
         const string ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Northwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-
+        #region methods
         /// <summary>
         /// Get all Invoices by entered Customer ID
         /// </summary>
@@ -141,5 +142,6 @@ namespace NorthwindApi.DataAccess
             }
             return products;
         }
+        #endregion
     }
 }

@@ -13,6 +13,10 @@ namespace Northwind.Api.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        /// <summary>
+        /// Get all Products
+        /// </summary>
+        /// <returns products></returns>
         [HttpGet]
         public List<Product> GetAll()
         {

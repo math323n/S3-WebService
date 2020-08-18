@@ -13,6 +13,10 @@ namespace NorthwindApi.Api.Controllers
     [ApiController]
     public class CustomerController: ControllerBase
     {
+        /// <summary>
+        /// Get all customers
+        /// </summary>
+        /// <returns customers></returns>
         [HttpGet]
         public List<Customer> GetAll()
         {
