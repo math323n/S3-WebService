@@ -16,7 +16,7 @@ namespace Northwind.Entities
 
         public Order(string customerID, DateTime orderDate,
             DateTime requiredDate, DateTime shippedDate,
-            string shipAddress, string shipCountry, bool isShipped)
+            string shipAddress, string shipCountry)
         {
             CustomerID = customerID;
             OrderDate = orderDate;
@@ -24,7 +24,8 @@ namespace Northwind.Entities
             ShippedDate = shippedDate;
             ShipAddress = shipAddress;
             ShipCountry = shipCountry;
-            IsShipped = isShipped;
+            // Bool IsShipped IS shipped date
+            IsShipped = shippedDate != default;
         }
 
         public string CustomerID

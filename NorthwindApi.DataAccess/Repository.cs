@@ -62,6 +62,24 @@ namespace NorthwindApi.DataAccess
             return customers;
         }
 
+        public List<Order> GetAllOrdersByID(string customerID)
+        {
+            string sql = $"SELECT CustomerID, OrderDate, RequiredDate, ShippedDate, ShipAddress, ShipCountry" +
+                 $" FROM Orders WHERE CustomerID LIKE '{customerID}'";
+            DataRowCollection datarows = Execute(sql);
+            List<Order> orders = ProcessOrders(datarows);
+            return orders;
+        }
+
+        public List<Order> GetAllOrders()
+        {
+            string sql = $"SELECT CustomerID, OrderDate, RequiredDate, ShippedDate, ShipAddress, ShipCountry" +
+                 $" FROM Orders";
+            DataRowCollection datarows = Execute(sql);
+            List<Order> orders = ProcessOrders(datarows);
+            return orders;
+        }
+
         /// <summary>
         /// Execute SQL
         /// </summary>
@@ -142,6 +160,25 @@ namespace NorthwindApi.DataAccess
             }
             return products;
         }
+
+        private List<Order> ProcessOrders(DataRowCollection datarows)
+        {
+            List<Order> orders = new List<Order>();
+            foreach(DataRow row in datarows)
+            {
+                string customerID = (string)row["CustomerID"];
+                DateTime orderDate = (DateTime)row["OrderDate"];
+                DateTime requiredDate = (DateTime)row["RequiredDate"];
+                DateTime shippedDate = Convert.IsDBNull(row["ShippedDate"]) ? DateTime.MinValue : (DateTime)row["ShippedDate"];
+                string shipAddress = (string)row["ShipAddress"];
+                string shipCountry = (string)row["ShipCountry"];
+                Order order = new Order(customerID, orderDate, requiredDate, shippedDate, shipAddress, shipCountry);
+                orders.Add(order);
+            }
+            return orders;
+        }
+
+
         #endregion
     }
 }
