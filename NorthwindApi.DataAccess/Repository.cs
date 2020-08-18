@@ -1,4 +1,5 @@
-﻿using NorthwindApi.Entities;
+﻿using Northwind.Entities;
+using NorthwindApi.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,17 +38,29 @@ namespace NorthwindApi.DataAccess
         }
 
         /// <summary>
+        /// Get all of the products
+        /// </summary>
+        /// <returns></returns>
+        public List<Product> GetAllProducts()
+        {
+            string sql = $"SELECT ProductID, ProductName, QuantityPerUnit, UnitPrice FROM Products";
+            DataRowCollection dataRows = Execute(sql);
+            List<Product> products = ProcessProducts(dataRows);
+            return products;
+        }
+
+        /// <summary>
         /// Get all customers
         /// </summary>
         /// <returns></returns>
         public List<Customer> GetAllCustomers()
         {
-            string sql = "SELECT DISTINCT CustomerID FROM Customers";
+            string sql = "SELECT CustomerID, CompanyName, ContactName, ContactTitle FROM Customers";
             DataRowCollection dataRows = Execute(sql);
             List<Customer> customers = ProcessCustomers(dataRows);
             return customers;
         }
-        
+
         /// <summary>
         /// Execute SQL
         /// </summary>
@@ -80,8 +93,11 @@ namespace NorthwindApi.DataAccess
             List<Customer> customers = new List<Customer>();
             foreach(DataRow row in dataRows)
             {
-                string customerName = (string)row["CustomerID"];
-                Customer customer = new Customer() { CustomerName = customerName };
+                string customerID = (string)row["CustomerID"];
+                string companyName = (string)row["CompanyName"];
+                string contactName = (string)row["ContactName"];
+                string contactTitle = (string)row["ContactTitle"];
+                Customer customer = new Customer(customerID, companyName, contactName, contactTitle);
                 customers.Add(customer);
             }
             return customers;
@@ -104,6 +120,26 @@ namespace NorthwindApi.DataAccess
                 invoices.Add(invoice);
             }
             return invoices;
+        }
+
+        /// <summary>
+        /// Process the products and return them as a list
+        /// </summary>
+        /// <param name="dataRows"></param>
+        /// <returns></returns>
+        private List<Product> ProcessProducts(DataRowCollection dataRows)
+        {
+            List<Product> products = new List<Product>();
+            foreach(DataRow row in dataRows)
+            {
+                int productID = (int)row["ProductID"];
+                string productName = (string)row["ProductName"];
+                string quantityPerUnit = (string)row["QuantityPerUnit"];
+                decimal unitPrice = (decimal)row["UnitPrice"];
+                Product product = new Product(productID, productName, quantityPerUnit, unitPrice);
+                products.Add(product);
+            }
+            return products;
         }
     }
 }
